@@ -1,8 +1,9 @@
 import React from 'react'
+import NewReleases from './components/NewReleases'
 
 function Homepage() {
   return (
-    <div>Homepage</div>
+    <div><NewReleases/></div>
   )
 }
 
