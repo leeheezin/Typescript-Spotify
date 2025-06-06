@@ -3,6 +3,7 @@ import './App.css';
 import { Route, Routes } from 'react-router';
 import Loading from './common/components/Loading/Loading';
 import useExchangeToken from './hooks/useExchangeToken';
+import CallbackPage from './pages/CallbackPage';
 
 const AppLayout = React.lazy(()=> import('./layout/AppLayout'))
 const HomePage = React.lazy(()=>import('./pages/HomePage/Homepage'))
@@ -25,7 +26,7 @@ function App() {
   return (
     <Suspense fallback={<Loading/>}>
       <Routes>
-        <Route path="/callback" element={<Loading />} />
+        <Route path="/callback" element={<CallbackPage />} />
         <Route path="/" element={<AppLayout/>}>
           <Route index element={<HomePage/>}/>
           <Route path="search" element={<SearchPage/>}/>
