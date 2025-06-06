@@ -7,7 +7,7 @@ const Navbar = () => {
     const {data:userProfile} = useGetCurrentUserProfile()
     return (
         <Box display='flex' justifyContent='flex-end' alignItems='center' height='64px'>
-            {userProfile ? <img src={userProfile.images[0]?.url}/>: <LoginButton/>}
+            {userProfile ? /*<img src={userProfile.images[0]?.url}/>*/ userProfile.display_name: <LoginButton/>}
         </Box>
     )
 }
