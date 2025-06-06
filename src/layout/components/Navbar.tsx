@@ -18,7 +18,7 @@ const Navbar = () => {
                 <Box position="relative">
                     <img
                         src={profileImage}
-                        alt="User avatar"
+                        alt="User profile"
                         onClick={() => setLogout(prev => !prev)}
                         style={{
                         cursor: 'pointer',
