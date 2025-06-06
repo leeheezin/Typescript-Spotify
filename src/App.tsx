@@ -25,6 +25,7 @@ function App() {
   return (
     <Suspense fallback={<Loading/>}>
       <Routes>
+        <Route path="/callback" element={<Loading />} />
         <Route path="/" element={<AppLayout/>}>
           <Route index element={<HomePage/>}/>
           <Route path="search" element={<SearchPage/>}/>
