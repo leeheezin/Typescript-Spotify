@@ -19,7 +19,7 @@ const Navbar = () => {
                 <Box position="relative">
                     <Avatar
                         src={userProfile.images[0]?.url || DEFAULT_AVATAR}
-                        alt="User Avatar"
+                        alt="User image"
                         onClick={() => setLogout(prev => !prev)}
                         sx={{ cursor: 'pointer', width: 40, height: 40 }}
                     />
