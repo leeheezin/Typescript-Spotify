@@ -7,3 +7,11 @@ export interface Image{
 export interface Restriction{
     reason?:string;
 }
+export interface Followers{
+    href?:string|null;
+    total?:number;   
+}
+export interface Explicit_content{
+    filter_enabled?:boolean;
+    filter_locked?:boolean;
+}
