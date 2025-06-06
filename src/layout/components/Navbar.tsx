@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import LoginButton from '../../common/components/LoginButton'
 import { Avatar, Box, Button, Typography } from '@mui/material'
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile'
+import profileImage from '../../assets/default.png'
 
 const Navbar = () => {
     const {data:userProfile} = useGetCurrentUserProfile()
@@ -11,7 +12,6 @@ const Navbar = () => {
         localStorage.removeItem('access_token')
         window.location.href = '/'
     }
-    const profileImage = userProfile?.images?.[0]?.url || '/default.png'
     return (
         <Box display="flex" justifyContent="flex-end" alignItems="center" height="64px">
             {userProfile ? (
@@ -32,7 +32,10 @@ const Navbar = () => {
                         <Button
                             variant="outlined"
                             size="small"
-                            sx={{ position: 'absolute', top: '100%', right: 0 }}
+                            sx={{ position: 'absolute', top: '100%', right: 0,whiteSpace: 'nowrap', backgroundColor:'black',color:'white','&:hover': {
+                            backgroundColor: '#333',
+                            borderColor: '#333',
+                            } }}
                             onClick={handleLogout}
                         >
                             로그아웃
