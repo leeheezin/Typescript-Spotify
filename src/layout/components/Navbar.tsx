@@ -3,8 +3,6 @@ import LoginButton from '../../common/components/LoginButton'
 import { Avatar, Box, Button, Typography } from '@mui/material'
 import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile'
 
-const DEFAULT_AVATAR = '/default.png';
-
 const Navbar = () => {
     const {data:userProfile} = useGetCurrentUserProfile()
     const [logout, setLogout] = useState(false)
@@ -18,7 +16,7 @@ const Navbar = () => {
             {userProfile ? (
                 <Box position="relative">
                     <Avatar
-                        src={userProfile.images[0]?.url || DEFAULT_AVATAR}
+                        src={userProfile.images?.[0]?.url || '/default.png'}
                         alt="User image"
                         onClick={() => setLogout(prev => !prev)}
                         sx={{ cursor: 'pointer', width: 40, height: 40 }}
