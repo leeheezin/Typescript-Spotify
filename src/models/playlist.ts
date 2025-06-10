@@ -23,22 +23,6 @@ export interface SimplifiedPlaylist {
     type?:string;
     uri?:string;
 }
-export interface IPlaylist {
-    id: string;                
-    name: string;             
-    images?: Image[];        
-    owner: Owner;             
-        description?: string;      
-    external_urls?: ExternalUrls; 
-    public?: boolean;         
-    snapshot_id?: string;    
-    tracks?: {
-        href?: string;          
-        total?: number;       
-    };
-    type: string;            
-    uri: string;              
-}
 export interface BasePlaylist {
   id: string;         
   name: string;      
@@ -61,7 +45,7 @@ export interface PlaylistTrack {
         uri?:string
     }|null;
     is_local?:boolean;
-    // track:Track|Episode;
+    // track:track|Episode;
     track:any;
 }
 export interface CreatePlaylistRequest{

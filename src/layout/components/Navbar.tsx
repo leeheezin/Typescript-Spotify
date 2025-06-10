@@ -12,12 +12,13 @@ const Navbar = () => {
         localStorage.removeItem('access_token')
         window.location.href = '/'
     }
+    const userProfileImage = userProfile?.images?.[0]?.url || profileImage;
     return (
         <Box display="flex" justifyContent="flex-end" alignItems="center" height="64px">
             {userProfile ? (
                 <Box position="relative">
                     <img
-                        src={profileImage}
+                        src={userProfileImage}
                         alt="User profile"
                         onClick={() => setLogout(prev => !prev)}
                         style={{

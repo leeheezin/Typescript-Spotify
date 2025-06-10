@@ -6,18 +6,16 @@ import EmptyPlaylist from "./EmptyPlaylist";
 import Loading from "../../common/components/Loading/Loading";
 import useGetCurrentUserPlaylists from "../../hooks/useGetCurrentUserPlaylists";
 import useGetCurrentUserProfile from "../../hooks/useGetCurrentUserProfile";
-import { IPlaylist, SimplifiedPlaylist } from "../../models/playlist";
+import { SimplifiedPlaylist } from "../../models/playlist";
 import { useInView } from "react-intersection-observer";
-const convertToIPlaylist = (simplifiedPlaylist: SimplifiedPlaylist): IPlaylist => {
-  return {
-    id: simplifiedPlaylist.id || "",  // `id`가 `undefined`일 경우 빈 문자열 처리
-    name: simplifiedPlaylist.name || "Unknown Playlist",  // name이 없으면 기본값 설정
-    images: simplifiedPlaylist.images || [],  // images가 없으면 빈 배열 처리
-    owner: simplifiedPlaylist.owner,  // owner는 필수
-    type: simplifiedPlaylist.type || "playlist",  // type이 없으면 기본값 설정
-    uri: simplifiedPlaylist.uri || "",  // uri가 없으면 빈 문자열 처리
-  };
-};
+
+
+interface PlaylistProps {
+  data?:any;
+  fetchNextPage?:()=>void;
+  hasNextPage?:boolean;
+  inFetchingNextPage?:boolean;
+}
 
 const PlaylistContainer = styled("div")(({ theme }) => ({
   overflowY: "auto",
@@ -32,46 +30,45 @@ const PlaylistContainer = styled("div")(({ theme }) => ({
     maxHeight: "calc(100vh - 65px - 119px)",
   },
 }));
-const Library = () => {
+const Library:React.FC<PlaylistProps> = () => {
     const { ref, inView } = useInView();
-  const {
+    const {
     data,
     isLoading,
     error,
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage
-  } = useGetCurrentUserPlaylists({ limit: 10, offset: 0 });
-  const {data:user} = useGetCurrentUserProfile()
-  useEffect(()=>{
-    if(inView && hasNextPage && !isFetchingNextPage){
-        fetchNextPage()
-    }
-  },[inView])
-  if(!user) return <EmptyPlaylist />
+    } = useGetCurrentUserPlaylists({ limit: 10, offset: 0 });
+    const {data:user} = useGetCurrentUserProfile()
+    useEffect(()=>{
+        if(inView && hasNextPage && !isFetchingNextPage){
+            fetchNextPage()
+        }
+    },[inView,hasNextPage])
+    if(!user) return <EmptyPlaylist />
 
-  console.log('data',data)
-  if (isLoading) {
-    return <Loading />;
-  }
-  if (error) {
-    return <ErrorMessage errorMessage={error.message} />;
-  }
-   const playlists: IPlaylist[] = data?.pages[0].items.map(convertToIPlaylist) || [];
-  return (
+    console.log('data',data)
+    if (isLoading) {
+        return <Loading />;
+    }
+    if (error) {
+        return <ErrorMessage errorMessage={error.message} />;
+    }
+    return (
     <div>
-      {!data ||data?.pages[0].total === 0 ? (
-        <EmptyPlaylist />
-      ) : (
-        <PlaylistContainer>
-            {data?.pages.map((page,index)=>(
-                <Playlist playlists={playlists} key={index}/>
-            ))}
-            <div ref={ref}>{isFetchingNextPage && <Loading/>}</div>
-        </PlaylistContainer>
-      )}
+        {!data ||data?.pages.length > 0 ? (
+            <PlaylistContainer>
+                {data?.pages.map((page,index)=>(
+                    <Playlist playlists={page.items || []} key={index}/>
+                ))}
+                <div ref={ref}>{!isFetchingNextPage && hasNextPage && <Loading/>}</div>
+            </PlaylistContainer>
+        ) : (
+            <EmptyPlaylist />
+        )}
     </div>
-  );
+    );
 };
 
 export default Library;

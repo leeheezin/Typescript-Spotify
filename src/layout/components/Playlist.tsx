@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import PlaylistItem from "../../common/components/PlaylistItem";
 import { useNavigate } from "react-router-dom";
-import { IPlaylist } from "../../models/playlist";
+import { SimplifiedPlaylist } from "../../models/playlist";
 
 interface PlaylistProps {
-  playlists: IPlaylist[];
+  playlists: SimplifiedPlaylist[];
 }
 
 const Playlist = ({ playlists }: PlaylistProps) => {
