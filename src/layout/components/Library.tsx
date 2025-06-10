@@ -18,17 +18,18 @@ interface PlaylistProps {
 }
 
 const PlaylistContainer = styled("div")(({ theme }) => ({
-  overflowY: "auto",
-  maxHeight: "calc(100vh - 240px)",
-  height: "100%",
-  "&::-webkit-scrollbar": {
-    display: "none",
-    msOverflowStyle: "none", // IE and Edge
-    scrollbarWidth: "none", // Firefox
-  },
-  [theme.breakpoints.down("sm")]: {
-    maxHeight: "calc(100vh - 65px - 119px)",
-  },
+    position: "relative",
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 240px)",
+    height: "100%",
+    "&::-webkit-scrollbar": {
+        display: "none",
+        msOverflowStyle: "none", // IE and Edge
+        scrollbarWidth: "none", // Firefox
+    },
+    [theme.breakpoints.down("sm")]: {
+        maxHeight: "calc(100vh - 65px - 119px)",
+    },
 }));
 const Library:React.FC<PlaylistProps> = () => {
     const { ref, inView } = useInView();
@@ -62,7 +63,7 @@ const Library:React.FC<PlaylistProps> = () => {
                 {data?.pages.map((page,index)=>(
                     <Playlist playlists={page.items || []} key={index}/>
                 ))}
-                <div ref={ref}>{!isFetchingNextPage && hasNextPage && <Loading/>}</div>
+                <div ref={ref}>{isFetchingNextPage && hasNextPage && <Loading/>}</div>
             </PlaylistContainer>
         ) : (
             <EmptyPlaylist />
