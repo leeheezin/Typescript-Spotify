@@ -34,7 +34,6 @@ interface PlaylistItemProps {
   selected?: boolean;
 }
 
-
 const PlaylistItem = ({
     image,
     name,

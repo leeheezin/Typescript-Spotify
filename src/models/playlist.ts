@@ -5,9 +5,10 @@ export interface GetCurrentUserPlaylistRequest {
     offset?:number;
 }
 export type GetCurrentUserPlaylistResponse = ApiResponse<SimplifiedPlaylist>
-export interface SimplifiedPlaylist {
+
+export interface BasePlaylist {
     collaborative?:boolean;
-    description?:string;
+    description?:string|null;
     external_urls?:ExternalUrls;
     href?:string;
     id?:string;
@@ -15,24 +16,19 @@ export interface SimplifiedPlaylist {
     name?:string;
     owner:Owner;
     public?:boolean;
-    snapshot_id?:string;
-    tracks?:{
-        href?:string;
-        total?:number;
-    }
-    type?:string;
+    snapshot_id?:string; 
+    type?:"playlist";
     uri?:string;
-}
-export interface BasePlaylist {
-  id: string;         
-  name: string;      
-  owner: Owner;      
-  type: string;    
-  uri: string;      
 }
 export interface Playlist extends BasePlaylist {
     tracks:ApiResponse<PlaylistTrack>;
     followers:Followers;
+}
+export interface SimplifiedPlaylist extends BasePlaylist {
+    tracks?:{
+        href?: string;
+        total?:number;
+    }
 }
 export interface PlaylistTrack {
     added_at?:string|null;
@@ -45,12 +41,138 @@ export interface PlaylistTrack {
         uri?:string
     }|null;
     is_local?:boolean;
-    // track:track|Episode;
-    track:any;
+    track:Track|Episode;
+}
+export interface Track {
+    album:{
+        album_type:string;
+        total_tracks:number;
+        available_markets:string[];
+        external_urls:{
+            spotify:string;
+        }
+        href:string;
+        id:string;
+        images:{
+            url:string;
+            height:number;
+            width:number;
+        }[];
+        name:string;
+        release_date:string;
+        release_date_precision:string;
+        restrictions:{
+            reason:string;
+        };
+        type:string;
+        uri:string;
+        artists: {
+            external_urls: { spotify: string };
+            href: string;
+            id: string;
+            name: string;
+            type: "artist";
+            uri: string;
+        }[];
+    };
+    artists?:{
+        external_urls: {
+        spotify: string;
+        };
+        href: string;
+        id: string;
+        name: string;
+        type: "artist";
+        uri: string;
+    }[];
+    available_markets?:string[];
+    disc_number?:number;
+    duration_ms?:number;
+    explicit?:boolean;
+    external_ids?:{
+        isrc:string;
+        ean:string;
+        upc:string;
+    }
+    external_urls?: {
+        spotify: string;
+    };
+    href?: string;
+    id?: string;
+    is_playable:boolean;
+    linked_from?:{};
+    restrictions?:{
+        reason:string;
+    };
+    name?:string;
+    popularity?:number;
+    preview_url?:string|null;
+    track_number?:number;
+    type?:string;
+    uri?:string;
+    is_local?:boolean;
+}
+export interface Episode {
+    audio_preview_url:string|null;
+    description:string;
+    html_description:string;
+    duration_ms:number;
+    explicit:boolean;
+    external_urls?: {
+        spotify: string;
+    };
+    href:string;
+    id:string;
+    images:Image[];
+    is_externally_hosted:boolean;
+    is_playable:boolean;
+    language:string[];
+    name:string;
+    release_date:string;
+    release_date_precision:string;
+    resume_point?:{
+        fully_played:boolean;
+        resume_position_ms:number;
+    }
+    type:string;
+    uri:string;
+    restrictions?:{
+        reason:string;
+    };
+    show:{
+        available_markets:string[];
+        copyrights:{
+            text:string;
+            type:string;
+        }[];
+        description:string;
+        html_description:string;
+        explicit:boolean;
+        external_urls: {
+            spotify: string;
+        };
+        href:string;
+        id:string;
+        images:Image[];
+        is_externally_hosted:boolean;
+        languages:string[];
+        media_type:string;
+        name:string;
+        publisher:string;
+        type:string;
+        uri:string;
+        total_episodes:number;
+    }
 }
 export interface CreatePlaylistRequest{
     name:string;
     playlistPublic?:boolean;
     collaborative?:boolean;
     description?:string;
+}
+export interface GetPlaylistRequest{
+    playlist_id:string;
+    market?:string;
+    fields?:string;
+    additional_types?:string;
 }
