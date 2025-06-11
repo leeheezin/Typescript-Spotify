@@ -108,7 +108,7 @@ export interface Track {
     popularity?:number;
     preview_url?:string|null;
     track_number?:number;
-    type?:string;
+    type?:"track";
     uri?:string;
     is_local?:boolean;
 }
@@ -134,7 +134,7 @@ export interface Episode {
         fully_played:boolean;
         resume_position_ms:number;
     }
-    type:string;
+    type:"episode";
     uri:string;
     restrictions?:{
         reason:string;
@@ -159,7 +159,7 @@ export interface Episode {
         media_type:string;
         name:string;
         publisher:string;
-        type:string;
+        type:"show";
         uri:string;
         total_episodes:number;
     }
@@ -176,3 +176,8 @@ export interface GetPlaylistRequest{
     fields?:string;
     additional_types?:string;
 }
+export interface GetPlaylistItemsRequest extends GetPlaylistRequest {
+    offset?:number;
+    limit?:number;
+}
+export type GetPlaylistItemsResponse = ApiResponse<PlaylistTrack>
