@@ -139,7 +139,9 @@ export interface Episode {
     restrictions?:{
         reason:string;
     };
-    show:{
+    show:Show
+}
+export interface Show {
         available_markets:string[];
         copyrights:{
             text:string;
@@ -162,8 +164,8 @@ export interface Episode {
         type:"show";
         uri:string;
         total_episodes:number;
-    }
 }
+export type SimplifiedEpisode = Omit<Episode, "show">
 export interface CreatePlaylistRequest{
     name:string;
     playlistPublic?:boolean;
@@ -181,3 +183,32 @@ export interface GetPlaylistItemsRequest extends GetPlaylistRequest {
     limit?:number;
 }
 export type GetPlaylistItemsResponse = ApiResponse<PlaylistTrack>
+
+export interface SimplifiedAudioBook {
+  authors: {
+    name: string;
+  }[];
+  available_markets: string[];
+  copyrights: {
+    text: string;
+    type: string;
+  }[];
+  description: string;
+  html_description: string;
+  edition?: string;
+  explicit: boolean;
+  external_urls:ExternalUrls;
+  href: string;
+  id: string;
+  images: Image[];
+  languages: string[];
+  media_type: string;
+  name: string;
+  narrators: {
+    name: string;
+  }[];
+  publisher: string;
+  type: "audiobook";
+  uri: string;
+  total_chapters: number;
+}

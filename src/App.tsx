@@ -25,7 +25,7 @@ function App() {
   },[code, codeVerifier, exchangeToken])
 
   return (
-    <Suspense fallback={<Loading/>}>
+    <Suspense fallback={<Loading isInfiniteScroll={false}/>}>
       <Routes>
         <Route path="/callback" element={<CallbackPage />} />
         <Route path="/" element={<AppLayout/>}>

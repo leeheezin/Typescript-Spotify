@@ -1,6 +1,8 @@
 import { Box, Button, Card, styled, Typography } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router'
+import { getSpotifyAuthUrl } from '../../utils/auth'
+import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile'
 
 
 const EmptyPlay = styled(Card)(({theme})=>({
@@ -21,6 +23,10 @@ const PlayListBtn = styled(Button)({
     marginTop:"20px"
 })
 const EmptyPlaylist = () => {
+  const {data:user} = useGetCurrentUserProfile()
+  const handleAuthUrl = () => {
+    if(!user) getSpotifyAuthUrl()
+  }
   return (
     <EmptyPlay>
         <Typography variant='h2' color='white' fontWeight={700}>
@@ -29,7 +35,7 @@ const EmptyPlaylist = () => {
         <Typography fontWeight={500} color='white'>
         It's easy, We'll help you
         </Typography>
-        <PlayListBtn variant="contained" color="secondary">Create playlist</PlayListBtn>
+        <PlayListBtn variant="contained" color="secondary" onClick={handleAuthUrl}>Create playlist</PlayListBtn>
     </EmptyPlay>
   )
 }

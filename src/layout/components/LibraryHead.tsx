@@ -4,6 +4,8 @@ import BookmarkIcon from '@mui/icons-material/Bookmark';
 import AddIcon from '@mui/icons-material/Add';
 import { NavLink } from 'react-router';
 import useCreatePlaylist from '../../hooks/useCreatePlaylist';
+import useGetCurrentUserProfile from '../../hooks/useGetCurrentUserProfile';
+import { getSpotifyAuthUrl } from '../../utils/auth';
 
 const StyledNavLink = styled(Box)(({theme})=>({
     textDecoration:"none",
@@ -20,8 +22,13 @@ const Header = styled("div")({
 
 const LibraryHead = () => {
   const {mutate:createPlaylist} = useCreatePlaylist()
+  const { data: user } = useGetCurrentUserProfile()
   const handleCreatePlaylist = () => {
-    createPlaylist({name:"나의플레이리스트"})
+    if(user) {
+      createPlaylist({name:"나의플레이리스트"})
+    } else {
+      getSpotifyAuthUrl()
+    }
   }
   return (
     <Header>

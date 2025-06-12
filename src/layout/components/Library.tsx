@@ -1,5 +1,5 @@
 import { Button, Card, styled, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ErrorMessage from "../../common/components/ErrorMessage";
 import Playlist from "./Playlist";
 import EmptyPlaylist from "./EmptyPlaylist";
@@ -8,6 +8,7 @@ import useGetCurrentUserPlaylists from "../../hooks/useGetCurrentUserPlaylists";
 import useGetCurrentUserProfile from "../../hooks/useGetCurrentUserProfile";
 import { SimplifiedPlaylist } from "../../models/playlist";
 import { useInView } from "react-intersection-observer";
+import LoginButton from "../../common/components/LoginButton";
 
 
 interface PlaylistProps {
@@ -41,17 +42,27 @@ const Library:React.FC<PlaylistProps> = () => {
     isFetchingNextPage,
     fetchNextPage
     } = useGetCurrentUserPlaylists({ limit: 10, offset: 0 });
+    const [isInfiniteScroll, setIsInfiniteScroll] = useState(false);
+    
     const {data:user} = useGetCurrentUserProfile()
     useEffect(()=>{
         if(inView && hasNextPage && !isFetchingNextPage){
             fetchNextPage()
         }
     },[inView,hasNextPage])
-    if(!user) return <EmptyPlaylist />
+    useEffect(() => {
+        if (inView) {
+          setIsInfiniteScroll(true); // 무한 스크롤이 활성화되면 true
+        } else {
+          setIsInfiniteScroll(false); // 무한 스크롤이 끝나면 false
+        }
+      }, [inView]);
 
-    console.log('data',data)
+  if (!user) {
+    return <EmptyPlaylist />;
+  }
     if (isLoading) {
-        return <Loading />;
+        return <Loading  isInfiniteScroll={isInfiniteScroll}/>;
     }
     if (error) {
         return <ErrorMessage errorMessage={error.message} />;
@@ -63,9 +74,9 @@ const Library:React.FC<PlaylistProps> = () => {
                 {data?.pages.map((page,index)=>(
                     <Playlist playlists={page.items || []} key={index}/>
                 ))}
-                <div ref={ref}>{isFetchingNextPage && hasNextPage && <Loading/>}</div>
+                <div ref={ref}>{isFetchingNextPage && hasNextPage && <Loading isInfiniteScroll={isInfiniteScroll}/>}</div>
             </PlaylistContainer>
-        ) : (
+        ):(
             <EmptyPlaylist />
         )}
     </div>

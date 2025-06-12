@@ -9,7 +9,7 @@ const NewReleases = () => {
     const {data,error,isLoading} = useGetNewReleases()
     console.log('ddd',data)
     if(isLoading){
-        return <Loading/>
+        return <Loading isInfiniteScroll={false}/>
     }
     if(error){
         return <ErrorMessage errorMessage={error.message}/>

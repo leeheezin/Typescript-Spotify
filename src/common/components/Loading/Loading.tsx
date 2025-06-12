@@ -8,7 +8,7 @@ const LoadingWrap = styled.div<{ isInfiniteScroll: boolean }>`
   justify-content: center;
   align-items: center;
   position: absolute; /* 테이블의 relative 영역을 기준으로 위치 설정 */
-  ${(props) => (props.isInfiniteScroll ? 'bottom: 0;' : 'top: 0;')}
+  ${(props) => (props.isInfiniteScroll ? 'bottom: 10px;' : 'top: 0;')}
   left: 50%;     /* 가로 중앙 정렬 */
   transform: translateX(-50%); /* 정확히 가로 중앙 정렬 */
   padding: 20px;

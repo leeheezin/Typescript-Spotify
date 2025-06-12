@@ -8,6 +8,7 @@ const useGetCurrentUserProfile = ():UseQueryResult<User, Error> => {
         queryKey:['current-user-profile'],
         queryFn: getCurrentUserProfile,
         enabled: !!accessToken, //token있을때만 실행
+        
     })
 }
 export default useGetCurrentUserProfile

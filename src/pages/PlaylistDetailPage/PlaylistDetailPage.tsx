@@ -20,6 +20,7 @@ import DesktopPlaylistItem from "./components/DesktopPlaylistItem";
 import { PAGE_LIMIT } from "../../configs/commonConfig";
 import { useInView } from "react-intersection-observer";
 import Loading from "../../common/components/Loading/Loading";
+import EmptyPlaylistWithSearch from "./components/EmptyPlaylistWithSearch";
 
 interface PlaylistItemProps {
   fetchNextPage?: () => void;
@@ -167,7 +168,7 @@ const PlaylistDetailPage: React.FC<PlaylistItemProps> = () => {
         </Grid>
       </PlaylistHeader>
       {playlist?.tracks?.total === 0 ? (
-        <Typography>search</Typography>
+        <Typography><EmptyPlaylistWithSearch/></Typography>
       ) : (
         <StyledTableContainer>
           <Table>
