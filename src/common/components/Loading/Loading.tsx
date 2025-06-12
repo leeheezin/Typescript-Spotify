@@ -8,7 +8,7 @@ const LoadingWrap = styled.div`
   justify-content: center;
   align-items: center;
   position: absolute; /* 테이블의 relative 영역을 기준으로 위치 설정 */
-  top: 50%;  /* 하단에 20px 떨어지게 위치 */
+  bottom: 0;  /* 하단에 20px 떨어지게 위치 */
   left: 50%;     /* 가로 중앙 정렬 */
   transform: translateX(-50%); /* 정확히 가로 중앙 정렬 */
   padding: 20px;
