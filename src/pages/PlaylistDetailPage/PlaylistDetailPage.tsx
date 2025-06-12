@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router";
 import useGetPlaylist from "../../hooks/useGetPlaylist";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -97,6 +97,7 @@ const DefaultImage = styled(Box)({
 const PlaylistDetailPage: React.FC<PlaylistItemProps> = () => {
   const { id } = useParams<{ id: string }>();
   const { ref, inView } = useInView();
+  const [isInfiniteScroll, setIsInfiniteScroll] = useState(false);
   if (!id) {
     return <Navigate to="/" />;
   }
@@ -115,6 +116,13 @@ const PlaylistDetailPage: React.FC<PlaylistItemProps> = () => {
       fetchNextPage();
     }
   }, [inView, hasNextPage]);
+  useEffect(() => {
+    if (inView) {
+      setIsInfiniteScroll(true); // 무한 스크롤이 활성화되면 true
+    } else {
+      setIsInfiniteScroll(false); // 무한 스크롤이 끝나면 false
+    }
+  }, [inView]);
   return (
     <PlayListWrap>
       <PlaylistHeader container spacing={7}>
@@ -188,7 +196,7 @@ const PlaylistDetailPage: React.FC<PlaylistItemProps> = () => {
               )}
             </TableBody>
           </Table>
-          {isFetchingNextPage && <Loading/>}
+          {isFetchingNextPage && <Loading isInfiniteScroll={isInfiniteScroll}/>}
         </StyledTableContainer>
       )}
     </PlayListWrap>
